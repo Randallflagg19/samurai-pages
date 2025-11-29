@@ -24,15 +24,19 @@ export type TrackListItemOutput = {
   attributes: TrackListItemOutputAttributesDto;
 };
 
+const prepareHeaders = () => {
+  const apiKey = import.meta.env.VITE_API_KEY;
+  if (!apiKey) return undefined;
+  return { "api-key": apiKey };
+};
+
 export const getTrack = async (
   trackId: string
 ): Promise<GetTrackDetailsOutput> => {
   const response = await fetch(
     `https://musicfun.it-incubator.app/api/1.0/playlists/tracks/${trackId}`,
     {
-      headers: {
-        // "api-key": "fc236a71-a8d3-4764-970a-f09dc0718018",
-      },
+      headers: prepareHeaders(),
     }
   );
 
@@ -51,7 +55,7 @@ export const getTracks = async (): Promise<Array<TrackListItemOutput>> => {
     "https://musicfun.it-incubator.app/api/1.0/playlists/tracks",
     {
       headers: {
-        // "api-key": "fc236a71-a8d3-4764-970a-f09dc0718018",
+        "api-key": import.meta.env.VITE_API_KEY,
       },
     }
   );
